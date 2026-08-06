@@ -1,0 +1,448 @@
+@import "tailwindcss";
+
+/* next-themes writes `class="dark"` on <html>, so wire the dark variant to it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------- palette --
+   Two carefully balanced themes. Light is paper-clean with an indigo accent;
+   dark is a deep navy-black that lets the aurora gradients glow. Values live on
+   :root/.dark so they can switch at runtime, and are mapped into Tailwind's
+   token space with `@theme inline`.                                          */
+
+:root {
+  --background: #ffffff;
+  --background-soft: #f5f7fc;
+  --foreground: #0a1020;
+  --muted: #54627a;
+  --subtle: #7d8ba3;
+
+  --card: #ffffff;
+  --card-soft: #fbfcfe;
+  --line: #e3e8f1;
+  --line-strong: #cfd7e6;
+
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef0ff;
+  --accent-contrast: #ffffff;
+  --accent-2: #0891b2;
+  --accent-3: #7c3aed;
+
+  --shadow-card: 0 1px 2px rgb(10 16 32 / 0.04), 0 12px 32px -12px rgb(10 16 32 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(10 16 32 / 0.05), 0 28px 60px -20px rgb(79 70 229 / 0.28);
+
+  --grid-line: rgb(10 16 32 / 0.045);
+  --glow-1: rgb(99 102 241 / 0.16);
+  --glow-2: rgb(6 182 212 / 0.14);
+  --glow-3: rgb(139 92 246 / 0.12);
+  --spotlight: rgb(79 70 229 / 0.1);
+}
+
+.dark {
+  --background: #05070f;
+  --background-soft: #080b16;
+  --foreground: #e9eefb;
+  --muted: #96a3bd;
+  --subtle: #6d7b95;
+
+  --card: rgb(255 255 255 / 0.028);
+  --card-soft: rgb(255 255 255 / 0.045);
+  --line: rgb(255 255 255 / 0.09);
+  --line-strong: rgb(255 255 255 / 0.16);
+
+  --accent: #8b93fb;
+  --accent-hover: #a5abff;
+  --accent-soft: rgb(129 140 248 / 0.14);
+  --accent-contrast: #070a14;
+  --accent-2: #22d3ee;
+  --accent-3: #b69bff;
+
+  --shadow-card: 0 1px 1px rgb(0 0 0 / 0.4), 0 18px 40px -16px rgb(0 0 0 / 0.7);
+  --shadow-lift: 0 1px 1px rgb(0 0 0 / 0.4), 0 32px 70px -24px rgb(99 102 241 / 0.42);
+
+  --grid-line: rgb(255 255 255 / 0.045);
+  --glow-1: rgb(99 102 241 / 0.3);
+  --glow-2: rgb(34 211 238 / 0.2);
+  --glow-3: rgb(168 85 247 / 0.24);
+  --spotlight: rgb(139 147 251 / 0.14);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SF Mono", "Cascadia Code", monospace;
+
+  --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-lift: var(--shadow-lift);
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 42s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-drift: drift 22s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.6s ease-in-out infinite;
+  --animate-blink: blink 1.05s step-end infinite;
+  --animate-pulse-ring: pulse-ring 2.6s ease-out infinite;
+}
+
+/* ------------------------------------------------------------- keyframes -- */
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(3%, -4%, 0) scale(1.06);
+  }
+  66% {
+    transform: translate3d(-3%, 3%, 0) scale(0.96);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  60%,
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ base -- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections clear of the fixed header. */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+    /*
+     * `clip` rather than `hidden`: it prevents a horizontal scrollbar without
+     * turning the root into a scroll container (which would break `position:
+     * sticky` and the smooth-scroll behaviour above). Set on both html and body
+     * because overflow on body alone propagates to the viewport and is ignored.
+     */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  /* Slim, theme-aware scrollbar. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border: 3px solid var(--background);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+
+  /* Honour the OS setting: strip motion, keep every element visible. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------ utilities -- */
+
+@utility text-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    var(--accent-3) 45%,
+    var(--accent-2) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  /* Descenders get clipped by background-clip without a little breathing room. */
+  padding-bottom: 0.06em;
+}
+
+@utility surface {
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+
+@utility bg-grid {
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-dots {
+  background-image: radial-gradient(var(--grid-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Thin gradient hairline used to separate major bands. */
+@utility hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-strong) 20%,
+    var(--line-strong) 80%,
+    transparent
+  );
+}
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 78rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Fades the ends of the marquee rows so chips slide out of view gracefully. */
+@utility mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+/* --------------------------------------------------------------- effects -- */
+
+/* Animated conic border used on featured cards and the avatar ring. */
+.gradient-ring {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--ring-angle, 0deg),
+    var(--accent),
+    var(--accent-2),
+    var(--accent-3),
+    var(--accent)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.gradient-ring:hover::before,
+.gradient-ring:focus-within::before,
+.gradient-ring[data-always="true"]::before {
+  opacity: 1;
+}
+
+@property --ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ring-spin {
+  to {
+    --ring-angle: 360deg;
+  }
+}
+
+.gradient-ring[data-always="true"]::before {
+  animation: ring-spin 6s linear infinite;
+}
+
+/* Cursor-following spotlight on cards; the CSS vars are set by React. */
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    380px circle at var(--x, 50%) var(--y, 50%),
+    var(--spotlight),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Very light film grain — takes the plastic sheen off large gradient areas. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Prevent the flash of un-themed content from being animated in. */
+.no-transition * {
+  transition: none !important;
+}
+
+/* ----------------------------------------------------------------- print -- */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
